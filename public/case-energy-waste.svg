@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Smart Energy Waste Detection &amp; Saving Platform: Consumption telemetry, AI baseline modeling, phantom load detection and savings insights">
+  <defs>
+    <pattern id="gridEnergy" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M50 0H0V50" fill="none" stroke="#ffffff" stroke-opacity="0.035" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glowEnergy" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#34d399" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="lineEnergy" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.2"/>
+      <stop offset="50%" stop-color="#34d399" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.8"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="#08080a"/>
+  <rect width="1600" height="900" fill="url(#gridEnergy)"/>
+  <circle cx="800" cy="450" r="420" fill="url(#glowEnergy)"/>
+
+  <text x="70" y="76" font-family="Consolas, 'Segoe UI', Arial, sans-serif" font-size="20" letter-spacing="6" fill="#34d399">TELEMETRY IN → SAVINGS OUT</text>
+  <text x="70" y="152" font-family="'Segoe UI', Arial, sans-serif" font-weight="800" font-size="54" letter-spacing="-1" fill="#f2f2f0">SMART ENERGY WASTE DETECTION</text>
+
+  <!-- Consumption telemetry card -->
+  <g>
+    <rect x="70" y="220" width="400" height="380" rx="22" fill="#0d0d10" stroke="#34d399" stroke-opacity="0.4"/>
+    <text x="106" y="272" font-family="Consolas, 'Segoe UI', Arial, sans-serif" font-size="14" letter-spacing="4" fill="#34d399">01 / LOAD TELEMETRY</text>
+    <path d="M106 292h328" stroke="#ffffff" stroke-opacity="0.08"/>
+    
+    <!-- wave graph -->
+    <path d="M110 420 Q 150 340, 190 410 T 270 380 T 350 330 T 420 400" fill="none" stroke="#34d399" stroke-width="3"/>
+    <path d="M110 470 Q 150 460, 190 470 T 270 450 T 350 460 T 420 460" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4 4"/>
+
+    <text x="106" y="520" font-family="Consolas, 'Segoe UI', Arial, sans-serif" font-size="12" fill="#a3a3a3">IDLE PHANTOM POWER: <tspan fill="#ef4444" font-weight="bold">185W (DETECTED)</tspan></text>
+    <text x="106" y="550" font-family="Consolas, 'Segoe UI', Arial, sans-serif" font-size="12" fill="#a3a3a3">PEAK CYCLE: <tspan fill="#34d399">1.8 kW (OPTIMIZED)</tspan></text>
+  </g>
+
+  <!-- Flow connectors -->
+  <g stroke="#34d399" fill="none">
+    <path d="M470 410 C 530 410, 530 330, 590 330" stroke-opacity="0.75" stroke-width="2.5"/>
+    <path d="M470 410 C 530 410, 530 490, 590 490" stroke-opacity="0.75" stroke-width="2.5"/>
+  </g>
+
+  <!-- AI Analysis Cards -->
+  <g>
+    <rect x="590" y="220" width="440" height="180" rx="20" fill="#0d0d10" stroke="#ffffff" stroke-opacity="0.1"/>
+    <text x="626" y="268" font-family="Consolas, 'Segoe UI', Arial, sans-serif" font-size="13" letter-spacing="3" fill="#34d399">02 / AI BASELINE MODEL</text>
+    <text x="626" y="310" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#ffffff">Anomaly &amp; Standby Detection</text>
+    <text x="626" y="345" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#a3a3a3">ML isolates vampire draw from essential equipment.</text>
+
+    <rect x="590" y="420" width="440" height="180" rx="20" fill="#0d0d10" stroke="#ffffff" stroke-opacity="0.1"/>
+    <text x="626" y="468" font-family="Consolas, 'Segoe UI', Arial, sans-serif" font-size="13" letter-spacing="3" fill="#34d399">03 / COST IMPACT MATRIX</text>
+    <text x="626" y="510" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="bold" fill="#ffffff">Estimated Monthly Payback</text>
+    <text x="626" y="545" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#a3a3a3">Converts idle kilowatt-hours into direct currency savings.</text>
+  </g>
+
+  <!-- Result Output Card -->
+  <g>
+    <rect x="1080" y="220" width="450" height="380" rx="22" fill="#34d399" fill-opacity="0.06" stroke="#34d399" stroke-opacity="0.6"/>
+    <text x="1116" y="272" font-family="Consolas, 'Segoe UI', Arial, sans-serif" font-size="14" letter-spacing="4" fill="#34d399">04 / SAVINGS ACTION PLAN</text>
+    <path d="M1116 292h378" stroke="#34d399" stroke-opacity="0.2"/>
+
+    <text x="1116" y="340" font-family="'Segoe UI', Arial, sans-serif" font-size="34" font-weight="800" fill="#34d399">28% REDUCTION</text>
+    <text x="1116" y="380" font-family="'Segoe UI', Arial, sans-serif" font-size="16" fill="#f2f2f0">Actionable Steps for Home &amp; Business:</text>
+
+    <circle cx="1126" cy="425" r="4" fill="#34d399"/>
+    <text x="1144" y="430" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#d4d4d4">Schedule water heater off-peak hours</text>
+
+    <circle cx="1126" cy="465" r="4" fill="#34d399"/>
+    <text x="1144" y="470" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#d4d4d4">Smart plug auto-kill on idle workstation</text>
+
+    <circle cx="1126" cy="505" r="4" fill="#34d399"/>
+    <text x="1144" y="510" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#d4d4d4">HVAC maintenance alert (compressor draw high)</text>
+
+    <rect x="1116" y="540" width="378" height="36" rx="8" fill="#34d399" fill-opacity="0.15"/>
+    <text x="1305" y="563" font-family="Consolas, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="bold" fill="#34d399" text-anchor="middle">ANNUAL ESTIMATED SAVINGS: ₹14,200 / YR</text>
+  </g>
+</svg>

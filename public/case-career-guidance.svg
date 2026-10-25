@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Concept diagram: a student skill profile is matched to career paths, revealing skill gaps and an ordered learning roadmap">
+  <defs>
+    <pattern id="grid3" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M50 0H0V50" fill="none" stroke="#ffffff" stroke-opacity="0.035" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow3" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#34d399" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="#08080a"/>
+  <rect width="1600" height="900" fill="url(#grid3)"/>
+  <circle cx="300" cy="450" r="340" fill="url(#glow3)"/>
+
+  <text x="70" y="76" font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="20" letter-spacing="6" fill="#34d399">SKILLS IN → ROADMAP OUT</text>
+  <text x="70" y="152" font-family="&apos;Segoe UI&apos;, Arial, sans-serif" font-weight="800" font-size="54" letter-spacing="-1" fill="#f2f2f0">CAREER PATH MATCHING</text>
+
+  <!-- student profile -->
+  <g>
+    <rect x="70" y="220" width="360" height="330" rx="22" fill="#0d0d10" stroke="#34d399" stroke-opacity="0.4"/>
+    <text x="106" y="272" font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="14" letter-spacing="4" fill="#34d399">STUDENT PROFILE</text>
+    <path d="M106 292h288" stroke="#ffffff" stroke-opacity="0.08"/>
+    <g font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="13" fill="#cfcfcf">
+      <rect x="106" y="316" width="96" height="30" rx="15" fill="#ffffff" fill-opacity="0.06"/><text x="126" y="336">PYTHON</text>
+      <rect x="212" y="316" width="72" height="30" rx="15" fill="#ffffff" fill-opacity="0.06"/><text x="232" y="336">SQL</text>
+      <rect x="294" y="316" width="100" height="30" rx="15" fill="#ffffff" fill-opacity="0.06"/><text x="312" y="336">C / JAVA</text>
+      <rect x="106" y="358" width="132" height="30" rx="15" fill="#ffffff" fill-opacity="0.06"/><text x="124" y="378">STATISTICS</text>
+      <rect x="248" y="358" width="146" height="30" rx="15" fill="#ffffff" fill-opacity="0.06"/><text x="266" y="378">INTERESTS</text>
+    </g>
+    <text x="106" y="432" font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="12" letter-spacing="3" fill="#6b6b6b">NLP NORMALISES EACH ENTRY</text>
+    <g stroke="#34d399" stroke-opacity="0.5" stroke-width="2">
+      <path d="M106 460h288"/>
+    </g>
+    <text x="106" y="500" font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="13" letter-spacing="3" fill="#34d399">MATCHED AGAINST JOB PROFILES</text>
+  </g>
+
+  <!-- links to paths -->
+  <g stroke="#34d399" fill="none">
+    <path d="M430 330 C 540 330, 540 250, 640 250" stroke-opacity="0.75" stroke-width="2.5"/>
+    <path d="M430 390 C 540 390, 540 410, 640 410" stroke-opacity="0.4" stroke-width="2"/>
+    <path d="M430 450 C 540 450, 540 570, 640 570" stroke-opacity="0.25" stroke-width="2"/>
+  </g>
+
+  <!-- career paths -->
+  <g font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="13" letter-spacing="2">
+    <g>
+      <rect x="640" y="206" width="380" height="88" rx="16" fill="#34d399" fill-opacity="0.08" stroke="#34d399" stroke-opacity="0.55"/>
+      <text x="670" y="248" font-family="&apos;Segoe UI&apos;, Arial, sans-serif" font-weight="800" font-size="26" letter-spacing="0" fill="#f2f2f0">AI / ML ENGINEER</text>
+      <rect x="670" y="262" width="320" height="8" rx="4" fill="#ffffff" fill-opacity="0.08"/>
+      <rect x="670" y="262" width="252" height="8" rx="4" fill="#34d399"/>
+      <text x="1002" y="248" font-size="12" fill="#34d399" text-anchor="end">BEST FIT</text>
+    </g>
+    <g opacity="0.7">
+      <rect x="640" y="366" width="380" height="88" rx="16" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.08"/>
+      <text x="670" y="408" font-family="&apos;Segoe UI&apos;, Arial, sans-serif" font-weight="800" font-size="26" letter-spacing="0" fill="#cfcfcf">DATA ANALYST</text>
+      <rect x="670" y="422" width="320" height="8" rx="4" fill="#ffffff" fill-opacity="0.08"/>
+      <rect x="670" y="422" width="180" height="8" rx="4" fill="#8a8a8a"/>
+    </g>
+    <g opacity="0.55">
+      <rect x="640" y="526" width="380" height="88" rx="16" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.08"/>
+      <text x="670" y="568" font-family="&apos;Segoe UI&apos;, Arial, sans-serif" font-weight="800" font-size="26" letter-spacing="0" fill="#cfcfcf">FULL-STACK DEV</text>
+      <rect x="670" y="582" width="320" height="8" rx="4" fill="#ffffff" fill-opacity="0.08"/>
+      <rect x="670" y="582" width="126" height="8" rx="4" fill="#8a8a8a"/>
+    </g>
+  </g>
+
+  <!-- gap + roadmap -->
+  <g>
+    <rect x="1080" y="206" width="450" height="408" rx="22" fill="#0d0d10" stroke="#ffffff" stroke-opacity="0.08"/>
+    <text x="1116" y="252" font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="14" letter-spacing="4" fill="#34d399">SKILL GAP</text>
+    <path d="M1116 270h378" stroke="#ffffff" stroke-opacity="0.08"/>
+    <g font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="14">
+      <text x="1116" y="306" fill="#a78bfa">✓</text><text x="1148" y="306" fill="#cfcfcf">PYTHON</text>
+      <text x="1116" y="340" fill="#a78bfa">✓</text><text x="1148" y="340" fill="#cfcfcf">STATISTICS</text>
+      <text x="1116" y="374" fill="#ff5c8a">✗</text><text x="1148" y="374" fill="#8a8a8a">MODEL EVALUATION</text>
+      <text x="1116" y="408" fill="#ff5c8a">✗</text><text x="1148" y="408" fill="#8a8a8a">DEPLOYMENT</text>
+    </g>
+
+    <text x="1116" y="464" font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="14" letter-spacing="4" fill="#34d399">LEARNING ROADMAP</text>
+    <path d="M1116 482h378" stroke="#ffffff" stroke-opacity="0.08"/>
+    <g font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="13" letter-spacing="2">
+      <g fill="#cfcfcf">
+        <circle cx="1128" cy="514" r="7" fill="#34d399"/><text x="1152" y="519">01 · FOUNDATIONS</text>
+        <circle cx="1128" cy="548" r="7" fill="#34d399" fill-opacity="0.7"/><text x="1152" y="553">02 · MODEL EVALUATION</text>
+        <circle cx="1128" cy="582" r="7" fill="#34d399" fill-opacity="0.45"/><text x="1152" y="587">03 · DEPLOYMENT + INTERVIEW PREP</text>
+      </g>
+      <path d="M1128 521v20M1128 555v20" stroke="#34d399" stroke-opacity="0.5" stroke-width="2"/>
+    </g>
+  </g>
+
+  <!-- pipeline strip -->
+  <g font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="13" letter-spacing="3">
+    <path d="M70 770h1460" stroke="#ffffff" stroke-opacity="0.08"/>
+    <g fill="#8a8a8a">
+      <text x="70" y="822">SKILLS IN</text>
+      <text x="278" y="822">AI ANALYSIS</text>
+      <text x="536" y="822">CAREER PATHS</text>
+      <text x="826" y="822">SKILL GAPS</text>
+      <text x="1064" y="822">ROADMAP</text>
+      <text x="1272" y="822" fill="#34d399">INTERVIEW PREP</text>
+    </g>
+    <g fill="#34d399" font-size="14">
+      <text x="222" y="822">→</text>
+      <text x="480" y="822">→</text>
+      <text x="770" y="822">→</text>
+      <text x="1008" y="822">→</text>
+      <text x="1216" y="822">→</text>
+    </g>
+  </g>
+</svg>

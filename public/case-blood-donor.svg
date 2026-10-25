@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Concept diagram: an emergency blood request is matched to ranked nearby donors">
+  <defs>
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M50 0H0V50" fill="none" stroke="#ffffff" stroke-opacity="0.035" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff3b5c" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#ff3b5c" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="#08080a"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <circle cx="560" cy="430" r="380" fill="url(#glow)"/>
+
+  <!-- title -->
+  <text x="70" y="76" font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="20" letter-spacing="6" fill="#ff3b5c">EMERGENCY REQUEST</text>
+  <text x="70" y="152" font-family="&apos;Segoe UI&apos;, Arial, sans-serif" font-weight="800" font-size="54" letter-spacing="-1" fill="#f2f2f0">DONOR MATCHING</text>
+
+  <!-- radar rings -->
+  <g fill="none" stroke="#ff3b5c" stroke-opacity="0.28">
+    <circle cx="560" cy="430" r="90"/>
+    <circle cx="560" cy="430" r="170" stroke-opacity="0.2"/>
+    <circle cx="560" cy="430" r="250" stroke-opacity="0.14"/>
+    <circle cx="560" cy="430" r="330" stroke-opacity="0.09"/>
+  </g>
+  <g stroke="#ffffff" stroke-opacity="0.07">
+    <path d="M230 430H890M560 100v660"/>
+  </g>
+
+  <!-- links to the three best matches -->
+  <g stroke="#ff3b5c" stroke-width="2">
+    <path d="M560 430 L742 300" stroke-opacity="0.85"/>
+    <path d="M560 430 L410 268" stroke-opacity="0.6"/>
+    <path d="M560 430 L700 590" stroke-opacity="0.45"/>
+  </g>
+  <g stroke="#ffffff" stroke-opacity="0.14" stroke-dasharray="5 7">
+    <path d="M560 430 L300 560"/>
+    <path d="M560 430 L820 470"/>
+    <path d="M560 430 L470 690"/>
+    <path d="M560 430 L330 360"/>
+  </g>
+
+  <!-- requesting hospital -->
+  <g>
+    <circle cx="560" cy="430" r="34" fill="#ff3b5c"/>
+    <path d="M560 414v32M544 430h32" stroke="#08080a" stroke-width="6" stroke-linecap="round"/>
+    <text x="560" y="500" font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="15" letter-spacing="3" fill="#f2f2f0" text-anchor="middle">HOSPITAL</text>
+  </g>
+
+  <!-- matched donors -->
+  <g font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="14" letter-spacing="2">
+    <g>
+      <circle cx="742" cy="300" r="13" fill="#ff3b5c"/>
+      <circle cx="742" cy="300" r="24" fill="none" stroke="#ff3b5c" stroke-opacity="0.5"/>
+      <text x="772" y="296" fill="#f2f2f0">O−</text>
+      <text x="772" y="316" fill="#8a8a8a" font-size="12">MATCH 01</text>
+    </g>
+    <g>
+      <circle cx="410" cy="268" r="11" fill="#ff3b5c" fill-opacity="0.8"/>
+      <text x="336" y="246" fill="#f2f2f0">A+</text>
+      <text x="316" y="266" fill="#8a8a8a" font-size="12">MATCH 02</text>
+    </g>
+    <g>
+      <circle cx="700" cy="590" r="11" fill="#ff3b5c" fill-opacity="0.7"/>
+      <text x="730" y="586" fill="#f2f2f0">O+</text>
+      <text x="730" y="606" fill="#8a8a8a" font-size="12">MATCH 03</text>
+    </g>
+  </g>
+
+  <!-- filtered-out donors -->
+  <g fill="#ffffff" fill-opacity="0.22">
+    <circle cx="300" cy="560" r="8"/>
+    <circle cx="820" cy="470" r="8"/>
+    <circle cx="470" cy="690" r="8"/>
+    <circle cx="330" cy="360" r="8"/>
+    <circle cx="640" cy="180" r="7"/>
+    <circle cx="880" cy="640" r="7"/>
+  </g>
+  <text x="252" y="596" font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="12" letter-spacing="2" fill="#6b6b6b">INELIGIBLE</text>
+
+  <!-- ranked shortlist panel -->
+  <g>
+    <rect x="1000" y="150" width="520" height="470" rx="22" fill="#0d0d10" stroke="#ffffff" stroke-opacity="0.08"/>
+    <text x="1040" y="205" font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="15" letter-spacing="5" fill="#ff3b5c">RANKED SHORTLIST</text>
+    <path d="M1040 228h440" stroke="#ffffff" stroke-opacity="0.08"/>
+
+    <g font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="14" letter-spacing="2">
+      <g>
+        <rect x="1040" y="256" width="440" height="96" rx="14" fill="#ff3b5c" fill-opacity="0.07" stroke="#ff3b5c" stroke-opacity="0.45"/>
+        <text x="1066" y="292" font-family="&apos;Segoe UI&apos;, Arial, sans-serif" font-weight="800" font-size="30" fill="#ff3b5c">01</text>
+        <text x="1120" y="290" fill="#f2f2f0">DONOR · O−</text>
+        <g font-size="11" fill="#cfcfcf">
+          <rect x="1120" y="306" width="96" height="24" rx="12" fill="#ffffff" fill-opacity="0.06"/><text x="1136" y="322">COMPATIBLE</text>
+          <rect x="1226" y="306" width="70" height="24" rx="12" fill="#ffffff" fill-opacity="0.06"/><text x="1244" y="322">NEARBY</text>
+          <rect x="1306" y="306" width="88" height="24" rx="12" fill="#ffffff" fill-opacity="0.06"/><text x="1320" y="322">AVAILABLE</text>
+        </g>
+      </g>
+      <g opacity="0.72">
+        <rect x="1040" y="366" width="440" height="80" rx="14" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.07"/>
+        <text x="1066" y="400" font-family="&apos;Segoe UI&apos;, Arial, sans-serif" font-weight="800" font-size="26" fill="#8a8a8a">02</text>
+        <text x="1120" y="398" fill="#cfcfcf">DONOR · A+</text>
+        <text x="1120" y="422" font-size="11" fill="#8a8a8a">COMPATIBLE · FURTHER AWAY</text>
+      </g>
+      <g opacity="0.55">
+        <rect x="1040" y="460" width="440" height="80" rx="14" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.07"/>
+        <text x="1066" y="494" font-family="&apos;Segoe UI&apos;, Arial, sans-serif" font-weight="800" font-size="26" fill="#8a8a8a">03</text>
+        <text x="1120" y="492" fill="#cfcfcf">DONOR · O+</text>
+        <text x="1120" y="516" font-size="11" fill="#8a8a8a">COMPATIBLE · CHECKING AVAILABILITY</text>
+      </g>
+      <text x="1040" y="586" font-size="12" letter-spacing="3" fill="#6b6b6b">NOTIFIED IN RANK ORDER</text>
+    </g>
+  </g>
+
+  <!-- pipeline strip -->
+  <g font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="13" letter-spacing="3">
+    <path d="M70 770h1460" stroke="#ffffff" stroke-opacity="0.08"/>
+    <g fill="#8a8a8a">
+      <text x="70" y="822">REQUEST</text>
+      <text x="268" y="822">ELIGIBILITY</text>
+      <text x="508" y="822">COMPATIBILITY</text>
+      <text x="790" y="822">DISTANCE</text>
+      <text x="1000" y="822">RANKING</text>
+      <text x="1198" y="822" fill="#ff3b5c">NOTIFY</text>
+    </g>
+    <g fill="#ff3b5c" font-size="14">
+      <text x="212" y="822">→</text>
+      <text x="452" y="822">→</text>
+      <text x="734" y="822">→</text>
+      <text x="944" y="822">→</text>
+      <text x="1142" y="822">→</text>
+    </g>
+  </g>
+</svg>

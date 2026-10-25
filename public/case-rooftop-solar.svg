@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Concept diagram: a rooftop image is analysed for usable area, shading and obstructions to estimate solar generation">
+  <defs>
+    <pattern id="grid2" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M50 0H0V50" fill="none" stroke="#ffffff" stroke-opacity="0.035" stroke-width="1"/>
+    </pattern>
+    <pattern id="panels" width="34" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(-18)">
+      <rect width="30" height="18" rx="2" fill="#fbbf24" fill-opacity="0.22" stroke="#fbbf24" stroke-opacity="0.5"/>
+    </pattern>
+    <pattern id="shade" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <path d="M0 0v14" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="5"/>
+    </pattern>
+    <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fdf4ff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="#08080a"/>
+  <rect width="1600" height="900" fill="url(#grid2)"/>
+
+  <text x="70" y="76" font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="20" letter-spacing="6" fill="#fbbf24">ROOF IMAGE → AI DETECTION</text>
+  <text x="70" y="152" font-family="&apos;Segoe UI&apos;, Arial, sans-serif" font-weight="800" font-size="54" letter-spacing="-1" fill="#f2f2f0">USABLE ROOF AREA</text>
+
+  <!-- sun -->
+  <circle cx="1160" cy="150" r="130" fill="url(#sun)"/>
+  <circle cx="1160" cy="150" r="34" fill="#fbbf24" fill-opacity="0.85"/>
+  <g stroke="#fbbf24" stroke-opacity="0.55" stroke-width="3" stroke-linecap="round">
+    <path d="M1160 74v-26M1160 252v26M1236 150h26M1058 150h-26M1214 96l18-18M1106 204l-18 18M1214 204l18 18M1106 96l-18-18"/>
+  </g>
+
+  <!-- roof, seen from above -->
+  <g transform="translate(120 200)">
+    <!-- building footprint -->
+    <path d="M60 180 L470 60 L860 210 L470 390 Z" fill="#101014" stroke="#ffffff" stroke-opacity="0.16"/>
+    <!-- detected usable area -->
+    <path d="M112 186 L466 84 L790 208 L466 350 Z" fill="url(#panels)" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="10 8"/>
+    <text x="352" y="228" font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="15" letter-spacing="3" fill="#fbbf24">USABLE AREA</text>
+
+    <!-- shaded region -->
+    <path d="M596 246 L744 216 L672 300 L566 288 Z" fill="url(#shade)" stroke="#38bdf8" stroke-opacity="0.7" stroke-width="2"/>
+    <text x="600" y="334" font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="13" letter-spacing="2" fill="#38bdf8">SHADING</text>
+
+    <!-- obstructions -->
+    <g>
+      <rect x="300" y="128" width="62" height="44" rx="6" fill="#0a0a0c" stroke="#ff5c8a" stroke-width="2"/>
+      <text x="268" y="116" font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="12" letter-spacing="2" fill="#ff5c8a">CHIMNEY</text>
+      <ellipse cx="556" cy="168" rx="38" ry="24" fill="#0a0a0c" stroke="#ff5c8a" stroke-width="2"/>
+      <text x="520" y="132" font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="12" letter-spacing="2" fill="#ff5c8a">TANK</text>
+    </g>
+
+    <!-- detection frame corners -->
+    <g stroke="#fbbf24" stroke-width="3" stroke-opacity="0.8">
+      <path d="M36 150v-30h30M836 176v-30h-30M36 300v30h30M836 330v-30h-30"/>
+    </g>
+  </g>
+
+  <!-- analysis panel -->
+  <g>
+    <rect x="1060" y="330" width="470" height="330" rx="22" fill="#0d0d10" stroke="#ffffff" stroke-opacity="0.08"/>
+    <text x="1098" y="384" font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="15" letter-spacing="5" fill="#fbbf24">SOLAR ANALYSIS</text>
+    <path d="M1098 406h394" stroke="#ffffff" stroke-opacity="0.08"/>
+
+    <g font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="13" letter-spacing="2" fill="#8a8a8a">
+      <text x="1098" y="450">ROOF AREA DETECTED</text>
+      <rect x="1098" y="462" width="394" height="10" rx="5" fill="#ffffff" fill-opacity="0.07"/>
+      <rect x="1098" y="462" width="330" height="10" rx="5" fill="#fbbf24" fill-opacity="0.85"/>
+
+      <text x="1098" y="520">MINUS SHADING &amp; OBSTRUCTIONS</text>
+      <rect x="1098" y="532" width="394" height="10" rx="5" fill="#ffffff" fill-opacity="0.07"/>
+      <rect x="1098" y="532" width="228" height="10" rx="5" fill="#38bdf8" fill-opacity="0.8"/>
+
+      <text x="1098" y="590" fill="#f2f2f0">ESTIMATED GENERATION</text>
+      <rect x="1098" y="602" width="394" height="14" rx="7" fill="#ffffff" fill-opacity="0.07"/>
+      <rect x="1098" y="602" width="268" height="14" rx="7" fill="#fbbf24"/>
+    </g>
+  </g>
+
+  <!-- pipeline strip -->
+  <g font-family="Consolas, &apos;Segoe UI&apos;, Arial, sans-serif" font-size="13" letter-spacing="3">
+    <path d="M70 770h1460" stroke="#ffffff" stroke-opacity="0.08"/>
+    <g fill="#8a8a8a">
+      <text x="70" y="822">ROOF IMAGE</text>
+      <text x="360" y="822">AI DETECTION</text>
+      <text x="680" y="822">SOLAR ANALYSIS</text>
+      <text x="1040" y="822" fill="#fbbf24">ESTIMATED GENERATION</text>
+    </g>
+    <g fill="#fbbf24" font-size="14">
+      <text x="296" y="822">→</text>
+      <text x="616" y="822">→</text>
+      <text x="976" y="822">→</text>
+    </g>
+  </g>
+</svg>
