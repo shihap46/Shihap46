@@ -39,14 +39,14 @@ export default function HeroScene() {
     <div ref={wrap} className="canvas-wrap canvas-fade">
       <Canvas
         camera={{ position: [0, 0.6, 13], fov: 58, near: 0.1, far: 300 }}
-        dpr={[1, 1.5]}
+        dpr={[1, 1.35]}
         frameloop={inView ? "always" : "never"}
         gl={{ antialias: true, alpha: true }}
         style={{ background: "transparent" }}
       >
-        <Starfield count={1200} depth={120} speedRef={starSpeed} />
+        <Starfield count={1000} depth={120} speedRef={starSpeed} />
         <Rig>
-          <GalaxyDisc count={6500} radius={7.4} rotationSpeed={0.055} intensity={0.26} inner="#ffffff" mid="#bdbdc8" outer="#7c6cf0" />
+          <GalaxyDisc count={3600} radius={7.4} rotationSpeed={0.055} intensity={0.26} inner="#ffffff" mid="#bdbdc8" outer="#7c6cf0" />
         </Rig>
       </Canvas>
     </div>

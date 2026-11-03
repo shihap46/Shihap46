@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 
 // True while the element is on (or near) screen. The 3D canvases use it to stop
 // their render loop once they are scrolled away instead of drawing unseen frames.
-export function useInView<T extends Element>(rootMargin = "120px") {
+export function useInView<T extends Element>(rootMargin = "120px", initialInView = true) {
   const ref = useRef<T>(null);
-  const [inView, setInView] = useState(false);
+  const [inView, setInView] = useState(initialInView);
 
   useEffect(() => {
     const el = ref.current;

@@ -59,10 +59,9 @@ function camZ(p: number) {
 
 type NumRef = React.RefObject<number>;
 
-/* Everything expensive happens here, while the screen is still dark: the reflection
-   probe the silver letters need, then shader compiling and program linking — together a
-   few hundred milliseconds, enough to stall the opening if they ran inside it. It reports
-   back so the timeline only starts on a warm scene. */
+/* Everything expensive happens off the critical path: the intro starts immediately
+   so the starfield and galaxy move smoothly on frame 1, while the reflection probe
+   for the silver letters builds in the background before they appear at p > 0.44. */
 function Warmup({ onReady }: { onReady: () => void }) {
   const { gl, scene, camera } = useThree();
   useEffect(() => {
@@ -73,25 +72,34 @@ function Warmup({ onReady }: { onReady: () => void }) {
       onReady();
     };
 
-    const pmrem = new THREE.PMREMGenerator(gl);
-    const room = new RoomEnvironment();
-    const env = pmrem.fromScene(room, 0.04).texture;
-    scene.environment = env;
-    room.dispose();
-    pmrem.dispose();
+    // Signal ready immediately so the cinematic starts without hitching
+    requestAnimationFrame(ready);
 
-    const compiling = gl.compileAsync?.(scene, camera);
-    if (compiling) compiling.then(ready, ready);
-    else {
-      gl.compile(scene, camera);
-      ready();
-    }
-    // Never hold the opening hostage if compiling stalls
-    const safety = window.setTimeout(ready, 2500);
+    let env: THREE.Texture | null = null;
+    const buildEnv = () => {
+      if (!scene) return;
+      try {
+        const pmrem = new THREE.PMREMGenerator(gl);
+        const room = new RoomEnvironment();
+        env = pmrem.fromScene(room, 0.04).texture;
+        scene.environment = env;
+        room.dispose();
+        pmrem.dispose();
+        gl.compile?.(scene, camera);
+      } catch {}
+    };
+
+    const idle = window.requestIdleCallback?.(buildEnv, { timeout: 1500 }) ?? window.setTimeout(buildEnv, 600);
+    const safety = window.setTimeout(ready, 1500);
+
     return () => {
+      window.cancelIdleCallback?.(idle);
+      window.clearTimeout(idle);
       window.clearTimeout(safety);
-      scene.environment = null;
-      env.dispose();
+      if (scene.environment) {
+        scene.environment = null;
+      }
+      env?.dispose();
     };
   }, [gl, scene, camera, onReady]);
   return null;
@@ -312,7 +320,7 @@ export default function IntroSequence({ onDone }: { onDone: () => void }) {
     <div ref={rootRef} className="intro-root" role="dialog" aria-label="Intro animation">
       <Canvas
         camera={{ position: [0, 1.8, 22], fov: 55, near: 0.1, far: 400 }}
-        dpr={[1, 1.6]}
+        dpr={[1, 1.35]}
         gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
         onCreated={({ gl }) => gl.setClearColor("#050506")}
       >
@@ -330,11 +338,11 @@ export default function IntroSequence({ onDone }: { onDone: () => void }) {
           galaxyTilt={galaxyTilt}
         />
         <FollowCamera>
-          <Starfield count={1500} depth={170} speedRef={starSpeed} opacityRef={starOpacity} />
+          <Starfield count={1200} depth={170} speedRef={starSpeed} opacityRef={starOpacity} />
         </FollowCamera>
         <TiltGroup tilt={galaxyTilt} position={[0, 0, -2]}>
           <GalaxyDisc
-            count={6500}
+            count={3600}
             opacityRef={galaxyOpacity}
             scaleRef={galaxyScale}
             rotationSpeed={0.16}

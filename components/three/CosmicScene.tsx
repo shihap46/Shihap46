@@ -20,6 +20,25 @@ const POINT_VERT = `
   }
 `;
 
+const STAR_VERT = `
+  attribute float size;
+  attribute vec3 color;
+  varying vec3 vColor;
+  uniform float uScale;
+  uniform float uOffset;
+  uniform float uDepth;
+  void main() {
+    vColor = color;
+    vec3 pos = position;
+    // position.z is in [-uDepth, 0]. Moving forward by uOffset:
+    float z = mod(pos.z + uOffset, uDepth) - uDepth + 12.0;
+    pos.z = z;
+    vec4 mv = modelViewMatrix * vec4(pos, 1.0);
+    gl_PointSize = min(size * (uScale / -mv.z), 26.0);
+    gl_Position = projectionMatrix * mv;
+  }
+`;
+
 const POINT_FRAG = `
   varying vec3 vColor;
   uniform float uOpacity;
@@ -45,7 +64,7 @@ function usePointMaterial(opacity: number, scale = 260, intensity = 1) {
 
 /* ─────────── Starfield: stars streaming toward the camera ─────────── */
 export function Starfield({
-  count = 2600,
+  count = 1500,
   depth = 160,
   speedRef,
   opacityRef,
@@ -58,7 +77,17 @@ export function Starfield({
   color?: string;
 }) {
   const points = useRef<THREE.Points>(null);
-  const uniforms = usePointMaterial(1, 180, 0.75);
+  const offsetRef = useRef(0);
+  const uniforms = useMemo(
+    () => ({
+      uScale: { value: 180 },
+      uOpacity: { value: 1 },
+      uIntensity: { value: 0.75 },
+      uOffset: { value: 0 },
+      uDepth: { value: depth },
+    }),
+    [depth]
+  );
 
   const { positions, colors, sizes } = useMemo(() => {
     const positions = new Float32Array(count * 3);
@@ -82,14 +111,9 @@ export function Starfield({
   }, [count, depth, color]);
 
   useFrame((_, delta) => {
-    if (!points.current) return;
     const speed = speedRef?.current ?? 6;
-    const arr = points.current.geometry.attributes.position.array as Float32Array;
-    for (let i = 2; i < arr.length; i += 3) {
-      arr[i] += speed * delta;
-      if (arr[i] > 12) arr[i] -= depth;
-    }
-    points.current.geometry.attributes.position.needsUpdate = true;
+    offsetRef.current += speed * delta;
+    uniforms.uOffset.value = offsetRef.current;
     uniforms.uOpacity.value = opacityRef?.current ?? 1;
   });
 
@@ -102,7 +126,7 @@ export function Starfield({
       </bufferGeometry>
       <shaderMaterial
         uniforms={uniforms}
-        vertexShader={POINT_VERT}
+        vertexShader={STAR_VERT}
         fragmentShader={POINT_FRAG}
         transparent
         depthWrite={false}
@@ -114,7 +138,7 @@ export function Starfield({
 
 /* ─────────── Galaxy: spiral arms of points ─────────── */
 export function GalaxyDisc({
-  count = 11000,
+  count = 3600,
   radius = 9,
   arms = 3,
   spin = 1.15,

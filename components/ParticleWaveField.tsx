@@ -9,14 +9,21 @@ const AMOUNTY = 80;
 
 function WaveParticles() {
   const meshRef = useRef<THREE.Points>(null);
-  const countRef = useRef(0);
   const mouseRef = useRef({ x: 0, y: 0 });
   const { viewport } = useThree();
 
-  const { positions, scales } = useMemo(() => {
+  const uniforms = useMemo(
+    () => ({
+      uColor: { value: new THREE.Color("#a78bfa") },
+      uCount: { value: 0 },
+    }),
+    []
+  );
+
+  const { positions, gridIndices } = useMemo(() => {
     const numParticles = AMOUNTX * AMOUNTY;
     const positions = new Float32Array(numParticles * 3);
-    const scales = new Float32Array(numParticles);
+    const gridIndices = new Float32Array(numParticles * 2);
 
     let i = 0;
     let j = 0;
@@ -26,21 +33,15 @@ function WaveParticles() {
         positions[i] = ix * SEPARATION - (AMOUNTX * SEPARATION) / 2;
         positions[i + 1] = 0;
         positions[i + 2] = iy * SEPARATION - (AMOUNTY * SEPARATION) / 2;
-        scales[j] = 1;
+        gridIndices[j] = ix;
+        gridIndices[j + 1] = iy;
         i += 3;
-        j++;
+        j += 2;
       }
     }
 
-    return { positions, scales };
+    return { positions, gridIndices };
   }, []);
-
-  const uniforms = useMemo(
-    () => ({
-      uColor: { value: new THREE.Color("#a78bfa") },
-    }),
-    []
-  );
 
   useFrame(({ pointer }) => {
     if (!meshRef.current) return;
@@ -48,40 +49,21 @@ function WaveParticles() {
     mouseRef.current.x += (pointer.x * viewport.width * 0.5 - mouseRef.current.x) * 0.05;
     mouseRef.current.y += (-pointer.y * viewport.height * 0.5 - mouseRef.current.y) * 0.05;
 
-    const posArray = meshRef.current.geometry.attributes.position.array as Float32Array;
-    const scaleArray = meshRef.current.geometry.attributes.scale.array as Float32Array;
-
-    let i = 0;
-    let j = 0;
-    const count = countRef.current;
-
-    for (let ix = 0; ix < AMOUNTX; ix++) {
-      for (let iy = 0; iy < AMOUNTY; iy++) {
-        posArray[i + 1] =
-          Math.sin((ix + count) * 0.3) * 30 +
-          Math.sin((iy + count) * 0.5) * 30;
-
-        scaleArray[j] =
-          (Math.sin((ix + count) * 0.3) + 1) * 10 +
-          (Math.sin((iy + count) * 0.5) + 1) * 10;
-
-        i += 3;
-        j++;
-      }
-    }
-
-    meshRef.current.geometry.attributes.position.needsUpdate = true;
-    meshRef.current.geometry.attributes.scale.needsUpdate = true;
-
-    countRef.current += 0.06;
+    uniforms.uCount.value += 0.06;
   });
 
   const vertexShader = `
-    attribute float scale;
+    attribute vec2 aGrid;
+    uniform float uCount;
     varying float vScale;
     void main() {
+      vec3 pos = position;
+      float ix = aGrid.x;
+      float iy = aGrid.y;
+      pos.y = sin((ix + uCount) * 0.3) * 30.0 + sin((iy + uCount) * 0.5) * 30.0;
+      float scale = (sin((ix + uCount) * 0.3) + 1.0) * 10.0 + (sin((iy + uCount) * 0.5) + 1.0) * 10.0;
       vScale = scale;
-      vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+      vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
       gl_PointSize = scale * (200.0 / -mvPosition.z);
       gl_Position = projectionMatrix * mvPosition;
     }
@@ -106,14 +88,14 @@ function WaveParticles() {
           args={[positions, 3]}
         />
         <bufferAttribute
-          attach="attributes-scale"
-          args={[scales, 1]}
+          attach="attributes-aGrid"
+          args={[gridIndices, 2]}
         />
       </bufferGeometry>
       <shaderMaterial
-        uniforms={uniforms}
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
+        uniforms={uniforms}
         transparent
         depthWrite={false}
         blending={THREE.AdditiveBlending}

@@ -1115,10 +1115,34 @@ html.intro-pending body::before {
   .space-comet--1 { top: 10vh; left: 96vw; animation-delay: 3s; }
   .space-comet--2 { top: 38vh; left: 108vw; animation-delay: 9s; animation-duration: 15s; }
 
-  /* Section-level 3D backgrounds dissolve into the page instead of ending in a hard box */
+  /* Disable space background rendering while cinematic intro covers screen */
+  html.intro-pending .space-bg,
+  html.intro-open .space-bg {
+    display: none !important;
+  }
+
+  /* Section-level 3D backgrounds dissolve into the page smoothly with zero WebGL compositor penalty */
   .canvas-fade {
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 84%, transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 84%, transparent 100%);
+    position: relative;
+  }
+  .canvas-fade::before,
+  .canvas-fade::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .canvas-fade::before {
+    top: 0;
+    height: 14%;
+    background: linear-gradient(to bottom, var(--bg, #050506) 0%, transparent 100%);
+  }
+  .canvas-fade::after {
+    bottom: 0;
+    height: 16%;
+    background: linear-gradient(to top, var(--bg, #050506) 0%, transparent 100%);
   }
 
   @media (prefers-reduced-motion: reduce) {

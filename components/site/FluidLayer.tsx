@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 import { useIntroFinished } from "../../utils/intro";
 
 const FluidBackground = dynamic(() => import("../FluidBackground"), { ssr: false });
@@ -10,7 +11,20 @@ const FluidBackground = dynamic(() => import("../FluidBackground"), { ssr: false
 export default function FluidLayer() {
   // Waits for the cinematic: it is hidden behind it anyway, and its setup costs frames
   const ready = useIntroFinished();
-  if (!ready) return null;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    if (!ready) return;
+    // Defer the fluid canvas slightly so the hero 3D scene claims GPU resources first
+    const idle = window.requestIdleCallback?.(() => setMounted(true), { timeout: 600 }) ??
+      window.setTimeout(() => setMounted(true), 400);
+    return () => {
+      window.cancelIdleCallback?.(idle);
+      window.clearTimeout(idle);
+    };
+  }, [ready]);
+
+  if (!ready || !mounted) return null;
 
   return (
     <div className="fluid-layer" aria-hidden>
