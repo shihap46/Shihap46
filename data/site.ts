@@ -30,20 +30,20 @@ export const academic = {
   degree: "B.Tech in Artificial Intelligence & Data Science",
   short: "B.Tech AI & DS",
   college: "Mohamed Sathak Engineering College",
-  status: "II Year, currently pursuing",
-  start: 2024,
-  end: 2028,
+  status: "B.Tech (2025–2029), currently pursuing",
+  start: 2025,
+  end: 2029,
 };
 
 export const summary =
-  "Second-year B.Tech Artificial Intelligence and Data Science student seeking a software development internship. Knowledge of C, C++, Python, Java, HTML and CSS, with completed internships in AI-driven software development and machine learning. Interested in building practical web applications and applying AI to real-world problems.";
+  "B.Tech Artificial Intelligence and Data Science student (2025–2029) seeking a software development internship. Knowledge of C, C++, Python, Java, HTML and CSS, with completed internships in AI-driven software development and machine learning. Interested in building practical web applications and applying AI to real-world problems.";
 
 export const about = {
   greeting: "Hi, I'm Shihapdeen.",
-  line: "Second-year B.Tech AI & Data Science student seeking a software development internship. Building practical web applications and applying AI to real-world problems.",
+  line: "B.Tech AI & Data Science student (2025–2029) seeking a software development internship. Building practical web applications and applying AI to real-world problems.",
   // The large intro paragraph in the About bento
   intro:
-    "Second-year B.Tech Artificial Intelligence and Data Science student at Mohamed Sathak Engineering College seeking a software development internship. Knowledge of C, C++, Python, Java, HTML and CSS, with completed internships in AI-driven software development and machine learning. Interested in building practical web applications and applying AI to real-world problems.",
+    "B.Tech Artificial Intelligence and Data Science student (2025–2029) at Mohamed Sathak Engineering College seeking a software development internship. Knowledge of C, C++, Python, Java, HTML and CSS, with completed internships in AI-driven software development and machine learning. Interested in building practical web applications and applying AI to real-world problems.",
 };
 
 export interface Internship {
@@ -139,13 +139,13 @@ export const skillRows: { label: string; words: string[] }[] = [
 ];
 
 export const education = {
-  intro: "Currently pursuing B.Tech in Artificial Intelligence & Data Science at Mohamed Sathak Engineering College (II Year).",
+  intro: "Currently pursuing B.Tech in Artificial Intelligence & Data Science at Mohamed Sathak Engineering College (2025–2029).",
   milestones: [
-    { year: 2024, title: "Started B.Tech", note: "Artificial Intelligence & Data Science at MSEC" },
-    { year: 2025, title: "Skillsync Pro Internship", note: "AI & Machine Learning Internship" },
-    { year: 2026, title: "Pantech Solutions Internship", note: "AI Driven Software Development (1-30 May 2026)" },
-    { year: 2027, title: "Advanced Projects", note: "Deeper into software architecture & AI systems" },
-    { year: 2028, title: "Graduation", note: "B.Tech in Artificial Intelligence & Data Science" },
+    { year: 2025, title: "Started B.Tech", note: "Artificial Intelligence & Data Science at MSEC" },
+    { year: 2026, title: "Skillsync Pro Internship", note: "AI & Machine Learning Internship" },
+    { year: 2027, title: "Pantech Solutions Internship", note: "AI Driven Software Development" },
+    { year: 2028, title: "Advanced Projects", note: "Deeper into software architecture & AI systems" },
+    { year: 2029, title: "Graduation", note: "B.Tech in Artificial Intelligence & Data Science" },
   ],
 };
 
