@@ -34,12 +34,12 @@ export function buildNameLetters(
         font,
         size,
         depth,
-        curveSegments: 4,
+        curveSegments: 3,
         bevelEnabled: true,
-        bevelThickness: 0.04,
-        bevelSize: 0.024,
+        bevelThickness: 0.03,
+        bevelSize: 0.02,
         bevelOffset: 0,
-        bevelSegments: 2,
+        bevelSegments: 1,
       });
       geometry.computeBoundingBox();
       const box = geometry.boundingBox!;

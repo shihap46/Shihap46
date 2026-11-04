@@ -4,7 +4,6 @@ import { Suspense, useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
-import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { buildNameLetters, NAME_FONT_URL } from "./three/nameLetters";
 import { useInView } from "../utils/useInView";
 
@@ -22,30 +21,6 @@ const FLIP_TIME = 0.95;
 
 const easeOutBack = (t: number) => 1 + 2.5 * Math.pow(t - 1, 3) + 1.5 * Math.pow(t - 1, 2);
 const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-
-function StudioReflections() {
-  const { gl, scene } = useThree();
-  useEffect(() => {
-    let env: THREE.Texture | null = null;
-    const build = () => {
-      const pmrem = new THREE.PMREMGenerator(gl);
-      const room = new RoomEnvironment();
-      env = pmrem.fromScene(room, 0.04).texture;
-      scene.environment = env;
-      room.dispose();
-      pmrem.dispose();
-    };
-    // Off the critical path: the letters it lights up are seconds away
-    const idle = window.requestIdleCallback?.(build, { timeout: 1200 }) ?? window.setTimeout(build, 300);
-    return () => {
-      window.cancelIdleCallback?.(idle);
-      window.clearTimeout(idle);
-      scene.environment = null;
-      env?.dispose();
-    };
-  }, [gl, scene]);
-  return null;
-}
 
 function Letters({
   lines,
@@ -199,17 +174,16 @@ export default function Hero3DName({
     <div ref={wrap} className="w-full h-full">
       <Canvas
         camera={{ position: [0, 0, CAM_Z], fov: CAM_FOV }}
-        dpr={[1, 1.5]}
+        dpr={[1, 1.25]}
         frameloop={inView ? "always" : "never"}
-        gl={{ antialias: true, alpha: true }}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         style={{ background: "transparent", pointerEvents: "none" }}
         fallback={null}
       >
-        <StudioReflections />
-        <ambientLight intensity={0.35} />
-        <directionalLight position={[-4, 5, 6]} intensity={1.4} color="#ffffff" />
-        <pointLight position={[-6, 1.5, -3]} intensity={38} distance={20} color="#a78bfa" />
-        <pointLight position={[6, -1.5, -3]} intensity={26} distance={20} color="#e5e5ea" />
+        <ambientLight intensity={0.45} />
+        <directionalLight position={[-4, 5, 6]} intensity={1.6} color="#ffffff" />
+        <pointLight position={[-6, 1.5, -3]} intensity={40} distance={20} color="#a78bfa" />
+        <pointLight position={[6, -1.5, -3]} intensity={28} distance={20} color="#e5e5ea" />
         <Suspense fallback={null}>
           <Letters lines={stableLines} bleedX={bleedX} bleedY={bleedY} onReady={onReady} pointer={pointer} />
         </Suspense>

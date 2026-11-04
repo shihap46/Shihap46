@@ -37,6 +37,9 @@ export default function CustomCursor() {
       l.textContent = text;
     };
 
+    let checkPending = false;
+    let lastTarget: Element | null = null;
+
     const onMove = (e: PointerEvent) => {
       dotX(e.clientX);
       dotY(e.clientY);
@@ -45,16 +48,23 @@ export default function CustomCursor() {
       d.style.opacity = "1";
       r.style.opacity = "1";
 
-      const target = (e.target as Element | null)?.closest?.(
-        "[data-cursor], a, button, input, textarea, select, [role='button']"
-      );
-      if (!target) return setState("");
-      const kind = target.getAttribute("data-cursor");
-      if (kind === "view") return setState("view", target.getAttribute("data-cursor-label") || "VIEW");
-      if (kind === "image") return setState("image");
-      if (kind === "hide") return setState("hide");
-      if (kind === "text" || target.matches("input, textarea")) return setState("text");
-      setState("link");
+      lastTarget = e.target as Element | null;
+      if (!checkPending) {
+        checkPending = true;
+        requestAnimationFrame(() => {
+          checkPending = false;
+          const target = lastTarget?.closest?.(
+            "[data-cursor], a, button, input, textarea, select, [role='button']"
+          );
+          if (!target) return setState("");
+          const kind = target.getAttribute("data-cursor");
+          if (kind === "view") return setState("view", target.getAttribute("data-cursor-label") || "VIEW");
+          if (kind === "image") return setState("image");
+          if (kind === "hide") return setState("hide");
+          if (kind === "text" || target.matches("input, textarea")) return setState("text");
+          setState("link");
+        });
+      }
     };
     const onDown = () => r.classList.add("is-down");
     const onUp = () => r.classList.remove("is-down");

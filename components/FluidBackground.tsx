@@ -9,12 +9,12 @@ import { useEffect, useRef } from "react";
    Pauses off-screen; static for reduced motion. */
 
 const CONFIG = {
-  SIM_RESOLUTION: 128,
-  DYE_RESOLUTION: 512,
+  SIM_RESOLUTION: 96,
+  DYE_RESOLUTION: 384,
   DENSITY_DISSIPATION: 1.6,
   VELOCITY_DISSIPATION: 0.3,
   PRESSURE: 0.8,
-  PRESSURE_ITERATIONS: 12,
+  PRESSURE_ITERATIONS: 6,
   CURL: 22,
   SPLAT_RADIUS: 0.22,
   SPLAT_FORCE: 5200,
@@ -625,8 +625,12 @@ export default function FluidBackground({ className = "", global = false }: { cl
     };
 
     // ── Input: the whole section drives the fluid, not just the bare canvas ──
+    let isHeroInView = false;
+    let heroObserver: IntersectionObserver | null = null;
+
     const pointer = { x: 0, y: 0, dx: 0, dy: 0, moved: false, down: false, last: performance.now() };
     const onPointerMove = (e: PointerEvent) => {
+      if (isHeroInView) return;
       // The global layer is fixed to the viewport, so it needs no layout read per pointer event
       const rect = global
         ? { left: 0, top: 0, width: window.innerWidth, height: window.innerHeight }
@@ -704,10 +708,37 @@ export default function FluidBackground({ className = "", global = false }: { cl
       render();
     }
 
+    const updatePlayState = () => {
+      if (reduceMotion) return;
+      if (isHeroInView) {
+        stop();
+      } else {
+        start();
+      }
+    };
+
+    if (global) {
+      const heroEl = document.getElementById("top");
+      if (heroEl) {
+        const rect = heroEl.getBoundingClientRect();
+        if (rect.bottom > 100) {
+          isHeroInView = true;
+        }
+        heroObserver = new IntersectionObserver(
+          ([entry]) => {
+            isHeroInView = entry.isIntersecting && entry.intersectionRatio > 0.2;
+            updatePlayState();
+          },
+          { threshold: [0, 0.2, 0.5, 0.8] }
+        );
+        heroObserver.observe(heroEl);
+      }
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (reduceMotion) return;
-        if (entry.isIntersecting) start();
+        if (entry.isIntersecting && !isHeroInView) start();
         else stop();
       },
       { rootMargin: "120px" }
@@ -717,6 +748,7 @@ export default function FluidBackground({ className = "", global = false }: { cl
     return () => {
       stop();
       observer.disconnect();
+      heroObserver?.disconnect();
       resizeObserver.disconnect();
       host.removeEventListener("pointermove", onPointerMove as EventListener);
       // No loseContext(): React StrictMode re-runs this effect on the same canvas, and a

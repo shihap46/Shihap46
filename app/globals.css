@@ -1065,6 +1065,8 @@ html.intro-pending body::before {
     inset: -600px;
     background-repeat: repeat;
     will-change: transform;
+    transform: translateZ(0);
+    contain: strict;
   }
 
   .space-stars--far {
