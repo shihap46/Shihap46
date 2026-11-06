@@ -73,7 +73,7 @@ function Warmup({ onReady }: { onReady: () => void }) {
     };
 
     // Signal ready immediately so the cinematic starts without hitching
-    requestAnimationFrame(ready);
+    const readyFrame = requestAnimationFrame(ready);
 
     let env: THREE.Texture | null = null;
     const buildEnv = () => {
@@ -93,6 +93,7 @@ function Warmup({ onReady }: { onReady: () => void }) {
     const safety = window.setTimeout(ready, 1500);
 
     return () => {
+      cancelAnimationFrame(readyFrame);
       window.cancelIdleCallback?.(idle);
       window.clearTimeout(idle);
       window.clearTimeout(safety);

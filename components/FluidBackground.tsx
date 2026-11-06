@@ -290,6 +290,19 @@ export default function FluidBackground({ className = "", global = false }: { cl
     if (!gl) gl = (canvas.getContext("webgl", params) || canvas.getContext("experimental-webgl", params)) as GL | null;
     if (!gl) return;
     const ctx: GL = gl;
+    // This canvas owns a WebGL2 context only. Track every GPU allocation so an
+    // effect replay (including Strict Mode) can release its work before setup runs again.
+    const textures = new Set<WebGLTexture>();
+    const framebuffers = new Set<WebGLFramebuffer>();
+    const buffers = new Set<WebGLBuffer>();
+    const shaders = new Set<WebGLShader>();
+    const programs = new Set<WebGLProgram>();
+    const disposeTargets = () => {
+      for (const framebuffer of framebuffers) ctx.deleteFramebuffer(framebuffer);
+      for (const texture of textures) ctx.deleteTexture(texture);
+      framebuffers.clear();
+      textures.clear();
+    };
 
     let halfFloatType: number;
     let supportLinearFiltering: unknown;
@@ -307,6 +320,8 @@ export default function FluidBackground({ className = "", global = false }: { cl
 
     const supportsRenderFormat = (internalFormat: number, format: number, type: number) => {
       const texture = ctx.createTexture();
+      if (!texture) return false;
+      textures.add(texture);
       ctx.bindTexture(ctx.TEXTURE_2D, texture);
       ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_MIN_FILTER, ctx.NEAREST);
       ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_MAG_FILTER, ctx.NEAREST);
@@ -314,12 +329,20 @@ export default function FluidBackground({ className = "", global = false }: { cl
       ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_WRAP_T, ctx.CLAMP_TO_EDGE);
       ctx.texImage2D(ctx.TEXTURE_2D, 0, internalFormat, 4, 4, 0, format, type, null);
       const fbo = ctx.createFramebuffer();
+      if (!fbo) {
+        ctx.deleteTexture(texture);
+        textures.delete(texture);
+        return false;
+      }
+      framebuffers.add(fbo);
       ctx.bindFramebuffer(ctx.FRAMEBUFFER, fbo);
       ctx.framebufferTexture2D(ctx.FRAMEBUFFER, ctx.COLOR_ATTACHMENT0, ctx.TEXTURE_2D, texture, 0);
       const ok = ctx.checkFramebufferStatus(ctx.FRAMEBUFFER) === ctx.FRAMEBUFFER_COMPLETE;
       ctx.bindFramebuffer(ctx.FRAMEBUFFER, null);
       ctx.deleteFramebuffer(fbo);
       ctx.deleteTexture(texture);
+      framebuffers.delete(fbo);
+      textures.delete(texture);
       return ok;
     };
 
@@ -343,6 +366,7 @@ export default function FluidBackground({ className = "", global = false }: { cl
     // ── Shaders / programs ──
     const compile = (type: number, source: string) => {
       const shader = ctx.createShader(type)!;
+      shaders.add(shader);
       const src = supportLinearFiltering ? source : `#define MANUAL_FILTERING\n${source}`;
       ctx.shaderSource(shader, src);
       ctx.compileShader(shader);
@@ -356,6 +380,7 @@ export default function FluidBackground({ className = "", global = false }: { cl
 
     const makeProgram = (fragmentSource: string) => {
       const program = ctx.createProgram()!;
+      programs.add(program);
       ctx.attachShader(program, baseVertex);
       ctx.attachShader(program, compile(ctx.FRAGMENT_SHADER, fragmentSource));
       ctx.bindAttribLocation(program, 0, "aPosition");
@@ -387,9 +412,13 @@ export default function FluidBackground({ className = "", global = false }: { cl
     const displayProgram = makeProgram(DISPLAY_SHADER);
 
     // ── Full-screen quad ──
-    ctx.bindBuffer(ctx.ARRAY_BUFFER, ctx.createBuffer());
+    const quadVertexBuffer = ctx.createBuffer()!;
+    const quadIndexBuffer = ctx.createBuffer()!;
+    buffers.add(quadVertexBuffer);
+    buffers.add(quadIndexBuffer);
+    ctx.bindBuffer(ctx.ARRAY_BUFFER, quadVertexBuffer);
     ctx.bufferData(ctx.ARRAY_BUFFER, new Float32Array([-1, -1, -1, 1, 1, 1, 1, -1]), ctx.STATIC_DRAW);
-    ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, ctx.createBuffer());
+    ctx.bindBuffer(ctx.ELEMENT_ARRAY_BUFFER, quadIndexBuffer);
     ctx.bufferData(ctx.ELEMENT_ARRAY_BUFFER, new Uint16Array([0, 1, 2, 0, 2, 3]), ctx.STATIC_DRAW);
     ctx.vertexAttribPointer(0, 2, ctx.FLOAT, false, 0, 0);
     ctx.enableVertexAttribArray(0);
@@ -409,6 +438,7 @@ export default function FluidBackground({ className = "", global = false }: { cl
     const createFBO = (w: number, h: number, internalFormat: number, format: number, type: number, param: number): FBO => {
       ctx.activeTexture(ctx.TEXTURE0);
       const texture = ctx.createTexture()!;
+      textures.add(texture);
       ctx.bindTexture(ctx.TEXTURE_2D, texture);
       ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_MIN_FILTER, param);
       ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_MAG_FILTER, param);
@@ -416,6 +446,7 @@ export default function FluidBackground({ className = "", global = false }: { cl
       ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_WRAP_T, ctx.CLAMP_TO_EDGE);
       ctx.texImage2D(ctx.TEXTURE_2D, 0, internalFormat, w, h, 0, format, type, null);
       const fbo = ctx.createFramebuffer()!;
+      framebuffers.add(fbo);
       ctx.bindFramebuffer(ctx.FRAMEBUFFER, fbo);
       ctx.framebufferTexture2D(ctx.FRAMEBUFFER, ctx.COLOR_ATTACHMENT0, ctx.TEXTURE_2D, texture, 0);
       ctx.viewport(0, 0, w, h);
@@ -473,6 +504,7 @@ export default function FluidBackground({ className = "", global = false }: { cl
     let pressure: DoubleFBO;
 
     const initFramebuffers = () => {
+      disposeTargets();
       const isSmall = window.innerWidth < 768;
       const simRes = resolution(CONFIG.SIM_RESOLUTION);
       const dyeRes = resolution(isSmall ? 384 : CONFIG.DYE_RESOLUTION);
@@ -751,8 +783,15 @@ export default function FluidBackground({ className = "", global = false }: { cl
       heroObserver?.disconnect();
       resizeObserver.disconnect();
       host.removeEventListener("pointermove", onPointerMove as EventListener);
-      // No loseContext(): React StrictMode re-runs this effect on the same canvas, and a
-      // force-lost context can never render again. The browser frees it with the canvas.
+      disposeTargets();
+      for (const program of programs) ctx.deleteProgram(program);
+      for (const shader of shaders) ctx.deleteShader(shader);
+      for (const buffer of buffers) ctx.deleteBuffer(buffer);
+      programs.clear();
+      shaders.clear();
+      buffers.clear();
+      // Do not force context loss: Strict Mode replays effects on the same canvas,
+      // whose WebGL2 context must remain usable by the next setup.
     };
   }, [global]);
 

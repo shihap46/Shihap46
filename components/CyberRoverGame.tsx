@@ -1908,7 +1908,7 @@ export default function CyberRoverGame() {
       {nearStation !== null && !activeProjectModal && (
         <button type="button" className="game-dock-prompt mono" onClick={() => dock(nearStation)}>
           <span className="text-[10px] text-neutral-300 font-normal tracking-widest">
-            {STATIONS[nearStation].label} // IN RANGE
+            {STATIONS[nearStation].label}{" // IN RANGE"}
           </span>
           <span>[ PRESS E OR TAP TO ACCESS DOCKING TERMINAL ]</span>
         </button>

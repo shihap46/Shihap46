@@ -38,6 +38,7 @@ export default function CustomCursor() {
     };
 
     let checkPending = false;
+    let checkFrame = 0;
     let lastTarget: Element | null = null;
 
     const onMove = (e: PointerEvent) => {
@@ -51,7 +52,8 @@ export default function CustomCursor() {
       lastTarget = e.target as Element | null;
       if (!checkPending) {
         checkPending = true;
-        requestAnimationFrame(() => {
+        checkFrame = requestAnimationFrame(() => {
+          checkFrame = 0;
           checkPending = false;
           const target = lastTarget?.closest?.(
             "[data-cursor], a, button, input, textarea, select, [role='button']"
@@ -83,6 +85,8 @@ export default function CustomCursor() {
       window.removeEventListener("pointerdown", onDown);
       window.removeEventListener("pointerup", onUp);
       document.documentElement.removeEventListener("pointerleave", onLeave);
+      if (checkFrame) cancelAnimationFrame(checkFrame);
+      gsap.killTweensOf([d, r]);
       document.documentElement.classList.remove("has-cursor");
     };
   }, []);

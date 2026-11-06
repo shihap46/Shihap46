@@ -11,7 +11,6 @@ import {
   Phone,
   MapPin,
   Building2,
-  Calendar,
   Sparkles,
   ArrowUpRight,
   Code2,
@@ -20,7 +19,6 @@ import {
   Wrench,
   GraduationCap,
   FileText,
-  Eye,
   Layers,
 } from "lucide-react";
 import gsap from "gsap";
