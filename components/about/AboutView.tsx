@@ -22,6 +22,7 @@ import {
 } from "../../data/site";
 import { featuredProject, projects } from "../../data/projects";
 import { prefersReducedMotion } from "../../utils/scroll";
+const publicBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -140,7 +141,7 @@ export default function AboutView() {
           data-cursor="image"
           onClick={() => setPhotoColor((c) => !c)}
         >
-          <img src="/images/shihap-about.jpg" alt={`Portrait of ${profile.name}`} width={1058} height={1024} />
+          <img src={`${publicBasePath}/images/shihap-about.jpg`} alt={`Portrait of ${profile.name}`} width={1058} height={1024} />
           <figcaption className="mono">
             {profile.name} · {academic.college}
             <span className="about-photo__hint" aria-hidden />

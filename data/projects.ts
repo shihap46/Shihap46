@@ -1,5 +1,8 @@
 import type { ProjectModalData } from "../context/GameContext";
 
+const publicBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const publicPath = (path: string) => `${publicBasePath}${path}`;
+
 export type ProjectShape = "icosahedron" | "torusKnot" | "octahedron" | "dodecahedron" | "torus" | "sun";
 
 export interface BuildStep {
@@ -117,7 +120,7 @@ export const projects: Project[] = [
       ],
       result:
         "Turns a chain of phone calls into a single ranked, real-time shortlist. This is the project I use to show how I take an urgent real-world problem and reduce it to a clear, working system.",
-      media: { scene: "blood", image: "/case-blood-donor.svg", caption: "Interactive 3D concept — the hospital broadcasts a request and links out to matched donors. Drag to orbit." },
+      media: { scene: "blood", image: publicPath("/case-blood-donor.svg"), caption: "Interactive 3D concept — the hospital broadcasts a request and links out to matched donors. Drag to orbit." },
     },
   },
   {
@@ -187,7 +190,7 @@ export const projects: Project[] = [
       ],
       result:
         "A working prototype that turns one rooftop photo into a solar estimate in a single pass, replacing a manual survey step with an automated one.",
-      media: { scene: "solar", image: "/case-rooftop-solar.svg", caption: "Interactive 3D concept — sunrise to sunset: sunlight hits the panels, energy charges the battery. Drag to orbit." },
+      media: { scene: "solar", image: publicPath("/case-rooftop-solar.svg"), caption: "Interactive 3D concept — sunrise to sunset: sunlight hits the panels, energy charges the battery. Drag to orbit." },
     },
   },
   {
@@ -262,7 +265,7 @@ export const projects: Project[] = [
       ],
       result:
         "Transforms abstract kilowatt-hour metrics into clear, actionable steps that pinpoint waste and empower households and small businesses to cut bills.",
-      media: { image: "/case-energy-waste.svg", caption: "Smart Energy Platform — load telemetry, AI waste classification, and projected savings." },
+      media: { image: publicPath("/case-energy-waste.svg"), caption: "Smart Energy Platform — load telemetry, AI waste classification, and projected savings." },
     },
   },
   {
@@ -339,7 +342,7 @@ export const projects: Project[] = [
       ],
       result:
         "A student goes from not knowing what to learn to an ordered roadmap for one specific role, with the interview preparation attached to it.",
-      media: { image: "/case-career-guidance.svg", caption: "Concept diagram — from a skill profile to matched paths, gaps and a roadmap." },
+      media: { image: publicPath("/case-career-guidance.svg"), caption: "Concept diagram — from a skill profile to matched paths, gaps and a roadmap." },
     },
   },
 ];

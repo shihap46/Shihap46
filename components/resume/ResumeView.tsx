@@ -96,7 +96,7 @@ export default function ResumeView() {
           {/* ─── Top Action Bar ─── */}
           <div className="flex flex-wrap items-center gap-3 res-in">
             <a
-              href="/resume.pdf"
+              href={profile.resume}
               download={`${profile.fullName.replace(/\s+/g, "_")}_Resume.pdf`}
               className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white text-black font-semibold text-xs tracking-wider uppercase hover:bg-[var(--acid)] transition-colors shadow-lg cursor-pointer"
               data-cursor="link"
@@ -106,7 +106,7 @@ export default function ResumeView() {
             </a>
 
             <a
-              href="/resume.pdf"
+              href={profile.resume}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-3 rounded-full glass text-neutral-200 hover:text-white hover:border-white/30 text-xs tracking-wider uppercase transition cursor-pointer"
@@ -477,7 +477,7 @@ export default function ResumeView() {
                 </Link>
 
                 <a
-                  href="/resume.pdf"
+                  href={profile.resume}
                   download="Shihapdeen_Resume.pdf"
                   className="px-6 py-3.5 rounded-full glass text-white hover:border-white/40 font-semibold text-xs tracking-wider uppercase transition inline-flex items-center gap-2 cursor-pointer"
                 >
@@ -501,7 +501,7 @@ export default function ResumeView() {
 
               <div className="flex items-center gap-3">
                 <a
-                  href="/resume.pdf"
+                  href={profile.resume}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full glass text-xs text-neutral-200 hover:text-white transition"
@@ -510,7 +510,7 @@ export default function ResumeView() {
                   <span>Open Fullscreen</span>
                 </a>
                 <a
-                  href="/resume.pdf"
+                  href={profile.resume}
                   download="Shihapdeen_Resume.pdf"
                   className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[var(--acid)] text-black font-semibold text-xs transition hover:brightness-110"
                 >
@@ -523,7 +523,7 @@ export default function ResumeView() {
             {/* Embedded PDF iframe */}
             <div className="w-full rounded-2xl overflow-hidden border border-white/15 bg-neutral-900 shadow-2xl relative" style={{ height: "85vh", minHeight: "700px" }}>
               <iframe
-                src="/resume.pdf#view=FitH"
+                src={`${profile.resume}#view=FitH`}
                 title="Shihapdeen S. Resume"
                 className="w-full h-full border-0"
               />

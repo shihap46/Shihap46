@@ -8,6 +8,7 @@ import ContactForm from "./ContactForm";
 import ResumeButton from "../site/ResumeButton";
 import { profile } from "../../data/site";
 import { prefersReducedMotion } from "../../utils/scroll";
+const publicBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 gsap.registerPlugin(useGSAP);
 
@@ -76,7 +77,7 @@ export default function ContactView() {
     <main ref={root} className="contact-page">
       <header className="cp-head">
         <div className="cp-avatar" data-cursor="image">
-          <img src="/images/shihap-about.jpg" alt={`${profile.name}`} width={1058} height={1024} />
+          <img src={`${publicBasePath}/images/shihap-about.jpg`} alt={`${profile.name}`} width={1058} height={1024} />
         </div>
         <h1 className="cp-title display">
           <span className="cp-line">

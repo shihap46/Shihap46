@@ -8,6 +8,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+const publicBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const publicPath = (path: string) => `${publicBasePath}${path}`;
+
 // Single source for personal details — edit here and every page updates
 export const profile = {
   name: "Shihap",
@@ -23,7 +26,7 @@ export const profile = {
   linkedin: "https://linkedin.com/",
   available: "available now for work",
   // Drop the PDF at public/resume.pdf — the download buttons switch on automatically
-  resume: "/resume.pdf",
+  resume: publicPath("/resume.pdf"),
 };
 
 export const academic = {

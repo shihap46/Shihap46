@@ -2,6 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   output: 'export',
+  // GitHub Pages serves this project from /Shihap46, while local builds stay at /.
+  basePath: process.env.GITHUB_PAGES === 'true' ? '/Shihap46' : '',
   experimental: {
     cpus: 1,
   },

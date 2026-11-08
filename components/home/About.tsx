@@ -10,6 +10,7 @@ import SectionTitle from "./SectionTitle";
 import SplitText from "../site/SplitText";
 import { about, academic, profile, services } from "../../data/site";
 import { prefersReducedMotion } from "../../utils/scroll";
+const publicBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -83,7 +84,7 @@ export default function About() {
             onClick={() => setPhotoColor((c) => !c)}
           >
             <img
-              src="/images/shihap-about.jpg"
+              src={`${publicBasePath}/images/shihap-about.jpg`}
               alt={`Portrait of ${profile.name}`}
               width={1058}
               height={1024}
