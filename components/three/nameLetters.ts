@@ -2,7 +2,8 @@ import * as THREE from "three";
 import type { Font } from "three/examples/jsm/loaders/FontLoader.js";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 
-export const NAME_FONT_URL = "/fonts/helvetiker_bold.typeface.json";
+const publicBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+export const NAME_FONT_URL = `${publicBasePath}/fonts/helvetiker_bold.typeface.json`;
 
 export interface NameLetter {
   geometry: THREE.BufferGeometry;
